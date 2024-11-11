@@ -1,0 +1,196 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+
+html,
+body {
+  height: 100%;
+}
+
+* {
+  color: white;
+}
+
+body {
+  --font-family: "Space Grotesk", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+    sans-serif;
+  margin: 0;
+  background: hsl(0, 0%, 27%);
+  color: white;
+  font-family: var(--font-family);
+  display: flex;
+  min-height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-image: url("/images/background-2.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+
+.todos {
+  background: hsla(0, 0%, 19%, 0.7);
+  border-radius: 1rem;
+  box-shadow: inset 2px 4px 16px 0 hsla(0, 0%, 97%, 0.06),
+    0 4px 8px 0 hsla(0, 0%, 0%, 0.2), 0 8px 16px 0 hsla(0, 0%, 0%, 0.15),
+    0 12px 24px 0 hsla(0, 0%, 0%, 0.1);
+  backdrop-filter: blur(8px);
+  width: 100%;
+  max-width: 400px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.todos-header {
+  display: flex;
+  align-items: center;
+}
+
+.add-todo {
+  margin-left: auto;
+  background: hsla(0, 0%, 12%, 0.7);
+  width: 44px;
+  height: 44px;
+  border-radius: 100%;
+  border: none;
+  box-shadow: inset 2px 4px 16px 0 hsla(0, 0%, 97%, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 150ms ease-out;
+  cursor: pointer;
+}
+
+.add-todo:hover {
+  box-shadow: inset 2px 4px 16px 0 hsla(0, 0%, 97%, 0.1);
+}
+
+.todos-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.todo {
+  background: hsla(0, 0%, 35%, 0.5);
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  padding: 6px 8px;
+  gap: 8px;
+  color: hsla(0, 0%, 70%, 0.8);
+}
+
+.todo:focus-within {
+  outline: 2px solid hsla(0, 0%, 80%, 0.5);
+  outline-offset: 2px;
+}
+
+.todo-delete {
+  margin-left: auto;
+}
+
+.todo-checkbox {
+  --size: 24px;
+  border: 2.5px solid hsla(0, 0%, 80%, 0.8);
+  border-radius: 100%;
+  width: var(--size);
+  height: var(--size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: outline 150ms ease-out;
+  flex-shrink: 0;
+}
+
+.todo-checkbox:focus-within {
+  outline: 2px solid hsla(0, 0%, 80%, 0.5);
+  outline-offset: 2px;
+}
+
+.todo-checkbox-circle {
+  --size: 14px;
+  border-radius: 100%;
+  width: var(--size);
+  height: var(--size);
+  background: hsla(0, 0%, 80%, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  display: none;
+  transition: opacity 150ms ease-out;
+}
+
+.todo.checked .todo-checkbox-circle {
+  display: flex;
+}
+
+.todo-checkbox input {
+  position: absolute;
+  width: calc(var(--size) + 6px);
+  height: calc(var(--size) + 6px);
+  top: -3px;
+  left: -3px;
+  margin: 0px;
+  opacity: 0;
+}
+
+.todo-delete {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: background-color 150ms ease-out, opacity 150ms ease-out;
+  border-radius: 100%;
+  opacity: 0;
+}
+
+.todo:hover .todo-delete {
+  opacity: 1;
+}
+
+.todo-delete:hover {
+  background-color: hsla(0, 0%, 50%, 0.8);
+}
+
+.todo-text {
+  color: hsla(0, 0%, 80%, 0.8);
+  background: transparent;
+  font-size: 1rem;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-family: var(--font-family);
+  padding: 0px;
+  margin: 0px;
+}
+
+.todo-text-container {
+  flex: 1;
+}
+
+.background-selector {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.background-selector button {
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 100%;
+  background-size: cover;
+  background-position: center;
+}

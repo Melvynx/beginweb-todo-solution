@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo List BeginWeb</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="todos">
+      <div class="todos-header">
+        <h1>Todos</h1>
+        <button class="add-todo">
+          <i data-lucide="plus"></i>
+        </button>
+      </div>
+      <div class="todos-list">
+        <div class="todo">
+          <div class="todo-checkbox">
+            <div class="todo-checkbox-circle"></div>
+            <input type="checkbox" />
+          </div>
+          <p class="todo-text">Learn HTML</p>
+          <button class="todo-delete">
+            <i data-lucide="trash"></i>
+          </button>
+        </div>
+        <div class="todo checked">
+          <div class="todo-checkbox">
+            <div class="todo-checkbox-circle"></div>
+            <input type="checkbox" />
+          </div>
+          <p class="todo-text">Learn HTML</p>
+          <button class="todo-delete">
+            <i data-lucide="trash"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="background-selector">
+      <button
+        style="background-image: url('/images/background-1.jpg')"
+      ></button>
+      <button
+        style="background-image: url('/images/background-2.jpg')"
+      ></button>
+      <button
+        style="background-image: url('/images/background-3.jpg')"
+      ></button>
+    </div>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
+    <script src="script.js"></script>
+  </body>
+</html>

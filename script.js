@@ -3,8 +3,21 @@ const addTodoButton = document.querySelector(".add-todo");
 
 const backgroundSelectorEl = document.querySelector(".background-selector");
 
-const TODOS_KEY = "beginweb-todos-key";
+const TODOS_KEY = "beginweb-todos-key2";
 const BG_IMG_KEY = "beginweb-bg-image";
+
+const backgroundImages = [
+  "/images/background-1.jpg",
+  "/images/background-2.jpg",
+  "/images/background-3.jpg",
+  "/images/background-4.jpg",
+];
+
+backgroundImages.forEach((img) => {
+  const button = document.createElement("button");
+  button.style.backgroundImage = `url('${img}')`;
+  backgroundSelectorEl.appendChild(button);
+});
 
 backgroundSelectorEl.addEventListener("click", (e) => {
   const backgroundImg = e.target.style.backgroundImage;
@@ -28,10 +41,12 @@ function addTodo() {
   ].sort((a, b) => a.completed - b.completed);
 
   updateTodos(newTodos);
-  const createdTodoEl = document.querySelector(`[data-todo-id="${newId}"]`);
-  createdTodoEl.querySelector(".todo-text").click();
-  const inputEl = createdTodoEl.querySelector("input.todo-text");
-  inputEl.select();
+  setTimeout(() => {
+    const createdTodoEl = document.querySelector(`[data-todo-id="${newId}"]`);
+    createdTodoEl.querySelector(".todo-text").click();
+    const inputEl = createdTodoEl.querySelector("input.todo-text");
+    inputEl.select();
+  }, 100);
 }
 
 const appState = {
@@ -186,10 +201,12 @@ function createDeleteButton(todo) {
 
 function initApp() {
   try {
-    appState.todos = JSON.parse(localStorage.getItem(TODOS_KEY));
+    appState.todos = JSON.parse(localStorage.getItem(TODOS_KEY)) ?? [];
   } catch (e) {
     console.error("Catch");
+    appState.todos = [];
   }
+  console.log(appState);
   renderTodos();
   document.body.style.backgroundImage = localStorage.getItem(BG_IMG_KEY);
 }

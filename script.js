@@ -28,10 +28,12 @@ function addTodo() {
   ].sort((a, b) => a.completed - b.completed);
 
   updateTodos(newTodos);
-  const createdTodoEl = document.querySelector(`[data-todo-id="${newId}"]`);
-  createdTodoEl.querySelector(".todo-text").click();
-  const inputEl = createdTodoEl.querySelector("input.todo-text");
-  inputEl.select();
+  setTimeout(() => {
+    const createdTodoEl = document.querySelector(`[data-todo-id="${newId}"]`);
+    createdTodoEl.querySelector(".todo-text").click();
+    const inputEl = createdTodoEl.querySelector("input.todo-text");
+    inputEl.select();
+  }, 10);
 }
 
 const appState = {
@@ -190,6 +192,11 @@ function initApp() {
   } catch (e) {
     console.error("Catch");
   }
+
+  if (!appState.todos) {
+    appState.todos = [];
+  }
+
   renderTodos();
   document.body.style.backgroundImage = localStorage.getItem(BG_IMG_KEY);
 }

@@ -46,7 +46,7 @@ function addTodo() {
     createdTodoEl.querySelector(".todo-text").click();
     const inputEl = createdTodoEl.querySelector("input.todo-text");
     inputEl.select();
-  }, 100);
+  }, 10);
 }
 
 const appState = {
@@ -206,7 +206,6 @@ function initApp() {
     console.error("Catch");
     appState.todos = [];
   }
-  console.log(appState);
   renderTodos();
   document.body.style.backgroundImage = localStorage.getItem(BG_IMG_KEY);
 }

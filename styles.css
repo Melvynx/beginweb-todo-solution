@@ -46,6 +46,7 @@ p {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  /* Commentaire */
 }
 
 .todos-header {
@@ -193,4 +194,5 @@ p {
   border-radius: 100%;
   background-size: cover;
   background-position: center;
+  border: 1px solid white;
 }

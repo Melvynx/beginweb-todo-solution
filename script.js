@@ -11,11 +11,12 @@ const backgroundImages = [
   "/images/background-2.jpg",
   "/images/background-3.jpg",
   "/images/background-4.jpg",
+  "",
 ];
 
 backgroundImages.forEach((img) => {
   const button = document.createElement("button");
-  button.style.backgroundImage = `url('${img}')`;
+  button.style.background = img ? `url('${img}')` : "hsl(0, 0%, 20%)";
   backgroundSelectorEl.appendChild(button);
 });
 

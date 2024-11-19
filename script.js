@@ -16,11 +16,7 @@ const backgroundImages = [
 
 backgroundImages.forEach((img) => {
   const button = document.createElement("button");
-  if (img) {
-    button.style.backgroundImage = `url('${img}')`;
-  } else {
-    button.style.background = "hsl(0, 0%, 20%)";
-  }
+  button.style.background = img ? `url('${img}')` : "hsl(0, 0%, 20%)";
   backgroundSelectorEl.appendChild(button);
 });
 

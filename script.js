@@ -27,48 +27,94 @@ backgroundSelectorEl.addEventListener("click", (e) => {
 });
 
 addTodoButton.addEventListener("click", (e) => {
-  addTodo();
+  void addTodoEvent();
 });
 
-function addTodo() {
-  const newId = Date.now();
-  const newTodos = [
-    ...appState.todos,
-    {
-      id: newId,
-      text: "Untilited",
-      completed: false,
-    },
-  ].sort((a, b) => a.completed - b.completed);
+async function addTodoEvent() {
+  const newTodo = await addTodoApi({
+    completed: false,
+    text: "Untilited",
+  });
 
-  updateTodos(newTodos);
   setTimeout(() => {
-    const createdTodoEl = document.querySelector(`[data-todo-id="${newId}"]`);
+    const createdTodoEl = document.querySelector(
+      `[data-todo-id="${newTodo.id}"]`
+    );
     createdTodoEl.querySelector(".todo-text").click();
     const inputEl = createdTodoEl.querySelector("input.todo-text");
     inputEl.select();
-  }, 10);
+  }, 100);
 }
 
 const appState = {
-  todos: [
-    {
-      id: 1,
-      text: "Learn JavaScript",
-      completed: false,
-    },
-    {
-      id: 2,
-      text: "Learn React",
-      completed: true,
-    },
-  ],
+  todos: [],
 };
 
-function updateTodos(newTodos) {
-  appState.todos = newTodos;
+async function getTodosApi() {
+  await new Promise((r) => setTimeout(r, 1000));
+  const result = await fetch("http://localhost:3000/todos");
+
+  if (!result.ok) {
+    alert("Failed to fetch todo");
+  }
+
+  const json = await result.json();
+
+  return json.todos;
+}
+
+async function updateTodoApi(todoId, newTodo) {
+  const result = await fetch(`http://localhost:3000/todos/${todoId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ todo: newTodo }),
+  });
+
+  if (!result.ok) {
+    alert("Failed to fetch todo");
+  }
+
+  appState.todos = await getTodosApi();
+
   renderTodos();
-  localStorage.setItem(TODOS_KEY, JSON.stringify(newTodos));
+}
+
+async function deleteTodoApi(todoId) {
+  const result = await fetch(`http://localhost:3000/todos/${todoId}`, {
+    method: "DELETE",
+  });
+
+  if (!result.ok) {
+    alert("Failed to fetch todo");
+  }
+
+  appState.todos = await getTodosApi();
+
+  renderTodos();
+}
+
+async function addTodoApi(newTodo) {
+  const result = await fetch(`http://localhost:3000/todos`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ todo: newTodo }),
+  });
+
+  if (!result.ok) {
+    alert("Failed to fetch todo");
+  }
+
+  const json = await result.json();
+
+  appState.todos = await getTodosApi();
+
+  renderTodos();
+
+  return json.todo;
 }
 
 function renderTodos() {
@@ -83,18 +129,7 @@ function renderTodos() {
   });
 }
 
-/** <div class="todo">
-          <div class="todo-checkbox">
-            <div class="todo-checkbox-circle"></div>
-            <input type="checkbox" />
-          </div>
-          <p class="todo-text">Learn HTML</p>
-          <button class="todo-delete">
-            <i data-lucide="trash"></i>
-          </button>
-        </div> */
 function createTodo(todo) {
-  // TODO
   const todoEl = document.createElement("div");
   todoEl.setAttribute("data-todo-id", todo.id);
   todoEl.classList.add("todo");
@@ -119,19 +154,12 @@ function createCheckbox(todo) {
   const todoCheckboxInput = document.createElement("input");
 
   todoCheckboxInput.addEventListener("change", () => {
-    const newTodos = appState.todos
-      .map((t) => {
-        if (t.id === todo.id) {
-          return {
-            ...t,
-            completed: !t.completed,
-          };
-        }
-        return t;
-      })
-      .sort((a, b) => a.completed - b.completed);
-
-    updateTodos(newTodos);
+    const closestTodo = todoCheckbox.closest(".todo");
+    const isCompleted = !todo.completed;
+    closestTodo.classList.toggle("checked", isCompleted);
+    updateTodoApi(todo.id, {
+      completed: isCompleted,
+    });
   });
 
   todoCheckbox.classList.add("todo-checkbox");
@@ -155,16 +183,10 @@ function createTextElement(todo) {
   });
 
   function editTodo(value) {
-    const newTodos = appState.todos.map((t) => {
-      if (t.id === todo.id) {
-        return {
-          ...t,
-          text: value,
-        };
-      }
-      return t;
-    });
-    updateTodos(newTodos);
+    updateTodoApi(todo.id, { text: value });
+    textEl.innerText = value;
+    textEl.style.display = "block";
+    inputEl.style.display = "none";
   }
 
   inputEl.addEventListener("blur", (e) => {
@@ -193,25 +215,21 @@ function createDeleteButton(todo) {
   buttonEl.appendChild(i);
 
   buttonEl.addEventListener("click", () => {
-    const newTodos = appState.todos.filter((t) => t.id !== todo.id);
-
-    updateTodos(newTodos);
+    deleteTodoApi(todo.id);
+    const closestTodo = buttonEl.closest(".todo");
+    closestTodo.remove();
   });
   return buttonEl;
 }
 
-function initApp() {
-  try {
-    appState.todos = JSON.parse(localStorage.getItem(TODOS_KEY)) ?? [];
-  } catch (e) {
-    console.error("Catch");
-    appState.todos = [];
-  }
+async function initApp() {
+  appState.todos = await getTodosApi();
+
   renderTodos();
+
   document.body.style.backgroundImage = localStorage.getItem(BG_IMG_KEY);
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("Tout chargé");
   initApp();
 });

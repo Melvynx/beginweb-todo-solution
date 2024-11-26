@@ -10,7 +10,6 @@ const backgroundImages = [
   "/images/background-2.jpg",
   "/images/background-3.jpg",
   "/images/background-4.jpg",
-  "",
 ];
 
 backgroundImages.forEach((img) => {

@@ -6,10 +6,10 @@ const backgroundSelectorEl = document.querySelector(".background-selector");
 const BG_IMG_KEY = "beginweb-bg-image";
 
 const backgroundImages = [
-  "/images/background-1.jpg",
   "/images/background-2.jpg",
-  "/images/background-3.jpg",
+  "/images/background-1.jpg",
   "/images/background-4.jpg",
+  "/images/background-3.jpg",
 ];
 
 backgroundImages.forEach((img) => {

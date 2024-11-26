@@ -3,7 +3,6 @@ const addTodoButton = document.querySelector(".add-todo");
 
 const backgroundSelectorEl = document.querySelector(".background-selector");
 
-const TODOS_KEY = "beginweb-todos-key2";
 const BG_IMG_KEY = "beginweb-bg-image";
 
 const backgroundImages = [
